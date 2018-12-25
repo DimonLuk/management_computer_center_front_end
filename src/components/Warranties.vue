@@ -10,20 +10,22 @@
     </v-text-field>
     <v-data-table
       :headers='headers'
-      :items='data'
+      :items='warrantys'
       :search='search'
       class='elevation-1'
     >
       <template slot='items' slot-scope='props'>
         <td class='text-xs-right'>{{ props.item.id }}</td>
-        <td class='text-xs-right'>{{ props.item.start_date }}</td>
-        <td class='text-xs-right'>{{ props.item.end_date }}</td>
+        <td class='text-xs-right'>{{ props.item.startDate }}</td>
+        <td class='text-xs-right'>{{ props.item.endDate }}</td>
       </template>
     </v-data-table>
   </v-container>
 </template>
 
 <script>
+import gql from 'graphql-tag'
+
 export default {
   name: 'Computers',
   data() {
@@ -31,27 +33,21 @@ export default {
       search: '',
       headers: [
         { text: 'id', align: 'right', value: 'id' },
-        { text: 'Дата начала', align: 'right', value: 'start_date' },
-        { text: 'Дата конца', align: 'right', value: 'end_date' },
+        { text: 'Дата начала', align: 'right', value: 'startDate' },
+        { text: 'Дата конца', align: 'right', value: 'endDate' },
       ],
-      data: [
-        {
-          id: 2,
-          start_date: 'AAA',
-          end_date: 'AAA',
-        },
-        {
-          id: 1,
-          start_date: 'CCC',
-          end_date: 'CCC',
-        },
-        {
-          id: 3,
-          start_date: 'BBB',
-          end_date: 'BBB',
-        },
-      ]
     }
+  },
+  apollo: {
+    warrantys: gql`
+      query {
+        warrantys {
+          id,
+          startDate,
+          endDate
+        }
+      }
+    `
   }
 }
 </script>
