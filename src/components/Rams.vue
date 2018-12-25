@@ -10,16 +10,16 @@
     </v-text-field>
     <v-data-table
       :headers='headers'
-      :items='data'
+      :items='rams'
       :search='search'
       class='elevation-1'
     >
       <template slot='items' slot-scope='props'>
         <td class='text-xs-right'>{{ props.item.id }}</td>
-        <td class='text-xs-right'>{{ props.item.serial_number }}</td>
-        <td class='text-xs-right'>{{ props.item.manufacturer_id }}</td>
-        <td class='text-xs-right'>{{ props.item.warranty_id }}</td>
-        <td class='text-xs-right'>{{ props.item.status }}</td>
+        <td class='text-xs-right'>{{ props.item.componentMetaInfo.serialNumber }}</td>
+        <td class='text-xs-right'>{{ props.item.componentMetaInfo.manufacturerId }}</td>
+        <td class='text-xs-right'>{{ props.item.componentMetaInfo.warrantyId }}</td>
+        <td class='text-xs-right'>{{ props.item.componentMetaInfo.status }}</td>
         <td class='text-xs-right'>{{ props.item.capacity }}</td>
         <td class='text-xs-right'>{{ props.item.frequency }}</td>
       </template>
@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import gql from 'graphql-tag'
+
 export default {
   name: 'Computers',
   data() {
@@ -35,43 +37,31 @@ export default {
       search: '',
       headers: [
         { text: 'id', align: 'right', value: 'id' },
-        { text: 'Серийный номер', align: 'right', value: 'serial_number' },
-        { text: 'Производитель(id)', align: 'right', value: 'manufacturer_id' },
-        { text: 'Гарантия(id)', align: 'right', value: 'warranty_id' },
+        { text: 'Серийный номер', align: 'right', value: 'serialNumber' },
+        { text: 'Производитель(id)', align: 'right', value: 'manufacturerId' },
+        { text: 'Гарантия(id)', align: 'right', value: 'warrantyId' },
         { text: 'Статус(id)', align: 'right', value: 'status' },
         { text: 'Объём(Mb)', align: 'right', value: 'capacity' },
         { text: 'Частота(Hz)', align: 'right', value: 'frequency' },
       ],
-      data: [
-        {
-          id: 2,
-          serial_number: 'AAA',
-          manufacturer_id: 1,
-          warranty_id: 1,
-          status: 'Working',
-          capacity: 8,
-          frequency: 1,
-        },
-        {
-          id: 1,
-          serial_number: 'CCC',
-          manufacturer_id: 2,
-          warranty_id: 2,
-          status: 'Broken',
-          capacity: 8,
-          frequency: 1,
-        },
-        {
-          id: 3,
-          serial_number: 'BBB',
-          manufacturer_id: 3,
-          warranty_id: 4,
-          status: 'Reparing',
-          capacity: 8,
-          frequency: 1,
-        },
-      ]
     }
+  },
+  apollo: {
+    rams: gql`
+      query {
+        rams {
+          id,
+          componentMetaInfo {
+            serialNumber,
+            manufacturerId,
+            warrantyId,
+            status
+          },
+          capacity,
+          frequency
+        }
+      }
+    `
   }
 }
 </script>

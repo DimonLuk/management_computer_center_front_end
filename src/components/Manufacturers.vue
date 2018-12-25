@@ -10,7 +10,7 @@
     </v-text-field>
     <v-data-table
       :headers='headers'
-      :items='data'
+      :items='manufacturers'
       :search='search'
       class='elevation-1'
     >
@@ -18,13 +18,14 @@
         <td class='text-xs-right'>{{ props.item.id }}</td>
         <td class='text-xs-right'>{{ props.item.title }}</td>
         <td class='text-xs-right'>{{ props.item.address }}</td>
-        <td class='text-xs-right'>{{ props.item.phone_number }}</td>
+        <td class='text-xs-right'>{{ props.item.phoneNumber }}</td>
       </template>
     </v-data-table>
   </v-container>
 </template>
 
 <script>
+import  gql from 'graphql-tag'
 export default {
   name: 'Computers',
   data() {
@@ -34,29 +35,19 @@ export default {
         { text: 'id', align: 'right', value: 'id' },
         { text: 'Название', align: 'right', value: 'title' },
         { text: 'Адресс', align: 'right', value: 'address' },
-        { text: 'Номер телефона', align: 'right', value: 'phone_number' },
+        { text: 'Номер телефона', align: 'right', value: 'phoneNumber' },
       ],
-      data: [
-        {
-          id: 2,
-          title: 'AAA',
-          address: 'Test',
-          phone_number: '+38096777777',
-        },
-        {
-          id: 1,
-          title: 'CCC',
-          address: 'Test 2',
-          phone_number: '+38098777777',
-        },
-        {
-          id: 3,
-          title: 'Test 3',
-          address: 'Tesssssst',
-          phone_number: '+38099999999',
-        },
-      ]
     }
+  },
+  apollo: {
+    manufacturers: gql`query {
+      manufacturers {
+        id,
+        title,
+        phoneNumber,
+        address
+      }
+    }`
   }
 }
 </script>
