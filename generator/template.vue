@@ -10,15 +10,13 @@
     </v-text-field>
     <v-data-table
       :headers='headers'
-      :items='warrantys'
+      :items='|model_s|'
       :search='search'
       class='elevation-1'
     >
       <template slot='items' slot-scope='props'>
         <td class='text-xs-right'>{{ props.item.id }}</td>
-        
-        <td class='text-xs-right'>{{ props.item.startDate }}</td>
-        <td class='text-xs-right'>{{ props.item.endDate }}</td>
+        |form_columns|
       </template>
     </v-data-table>
     <v-form v-model='valid'>
@@ -59,7 +57,7 @@
             <v-select
               v-model='formData.id' 
               label='id'
-              :items='warrantys'
+              :items='|model_s|'
               item-text='id'
               item-value='id'
               solo
@@ -67,23 +65,7 @@
               @change='prefill()'
             >
             </v-select>
-          <v-text-field
-  :rules="rules.notMoreThanTen"
-  mask="####-##-##"
-  v-model="formData.startDate"
-  label="Дата начала"
-  required
-  v-if='mode === "create" || mode === "update"'
-></v-text-field>
-<v-text-field
-  :rules="rules.notMoreThanTen"
-  mask="####-##-##"
-  v-model="formData.endDate"
-  label="Дата конца"
-  required
-  v-if='mode === "create" || mode === "update"'
-></v-text-field>
-
+          |form_fields|
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
@@ -115,17 +97,13 @@ export default {
       prevMode: '',
       headers: [
         { text: 'id', align: 'right', value: 'id' },
-        
-    { text: 'Дата начала', align: 'right', value: 'startDate' },
-    { text: 'Дата конца', align: 'right', value: 'endDate' },
+        |table_headers|
       ],
       isDisplayForm: false,
       valid: false,
       formData: {
         id: '',
-        
-    startDate: '',
-    endDate: '',
+        |form_field_data|
       },
       rules: {
         notMoreThanTen: [
@@ -143,7 +121,7 @@ export default {
         this.mode = mode;
       if(this.mode === 'update') {
         this.prevMode = 'update'
-        const data = find(this.warrantys, el => el.id === this.formData.id);
+        const data = find(this.|model_s|, el => el.id === this.formData.id);
         for (let key in this.formData) {
           if (data[key]) {
             this.formData[key] = '' + data[key];
@@ -179,10 +157,10 @@ export default {
       await this.$apollo.mutate({
         mutation: gql`
           mutation($id: Int!) {
-            deleteWarranty(input: {
+            delete|model_c_f|(input: {
               id: $id
             }) {
-              warranty {
+              |model| {
                 id
               }
             }
@@ -194,17 +172,16 @@ export default {
       });
     },
     async updateModel() {
-      const data = find(this.warrantys, el => el.id === this.formData.id);
-      
+      const data = find(this.|model_s|, el => el.id === this.formData.id);
+      |update_component_meta_info|
       const result = await this.$apollo.mutate({
         mutation: gql`
-          mutation ($id: Int!, $startDate: Date!, $endDate: Date!) {
-            updateWarranty(input: {
+          mutation ($id: Int!, |main_params|) {
+            update|model_c_f|(input: {
               id: $id,
-              startDate: $startDate,
-endDate: $endDate
+              |main_params_and_values|
             }) {
-              warranty {
+              |model| {
                 id
               }    
             }
@@ -212,46 +189,42 @@ endDate: $endDate
         `,
         variables: {
           id: Number(data.id),
-          startDate: this.formData.startDate,
-endDate: this.formData.endDate
+          |main_values|
         }
       });
     },
     async createModel() {
-      
+      |create_component_meta_info|
       const result = await this.$apollo.mutate({
         mutation: gql`
-          mutation ($startDate: Date!, $endDate: Date!) {
-            createWarranty(input: {
-              startDate: $startDate,
-endDate: $endDate
+          mutation (|main_params|) {
+            create|model_c_f|(input: {
+              |main_params_and_values|
             }) {
-              warranty {
+              |model| {
                 id
               }    
             }
           }
         `,
         variables: {
-          startDate: this.formData.startDate,
-endDate: this.formData.endDate
+          |main_values|
         }
       });
     }
   },
   apollo: {
-    warrantys: gql`
+    |model_s|: gql`
       query {
-      warrantys {
-          
+      |model_s| {
+          |component_meta_info_query|
           id,
-          startDate,
-endDate
+          |model_fields|
         }
       }
     `,
-    
-    
+    |manufacturers_query|
+    |warrantys_query|
   }
 }
 </script>

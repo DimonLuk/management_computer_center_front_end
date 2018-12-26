@@ -10,13 +10,13 @@
     </v-text-field>
     <v-data-table
       :headers='headers'
-      :items='motherboards'
+      :items='|model_s|'
       :search='search'
       class='elevation-1'
     >
       <template slot='items' slot-scope='props'>
+        <!--
         <td class='text-xs-right'>{{ props.item.id }}</td>
-        
         <td class='text-xs-right'>{{ props.item.componentMetaInfo.serialNumber }}</td>
         <td class='text-xs-right'>{{ props.item.componentMetaInfo.manufacturerId }}</td>
         <td class='text-xs-right'>{{ props.item.componentMetaInfo.warrantyId }}</td>
@@ -26,7 +26,8 @@
         <td class='text-xs-right'>{{ props.item.pciSlots }}</td>
         <td class='text-xs-right'>{{ props.item.usedPciSlots }}</td>
         <td class='text-xs-right'>{{ props.item.ramSlots }}</td>
-        <td class='text-xs-right'>{{ props.item.usedRamSlots }}</td>
+        <td class='text-xs-right'>{{ props.item.usedRamSlots }}</td>--!>
+        |form_columns|
       </template>
     </v-data-table>
     <v-form v-model='valid'>
@@ -74,93 +75,104 @@
               v-if='mode === "update" || mode === "delete"'
               @change='prefill()'
             >
+          <!--
             </v-select>
-          <v-text-field
-  :rules="rules.notMoreThanTen"
-  mask="NNNNNNNNNN"
-  v-model="formData.serialNumber"
-  label="Серийный номер"
-  required
-  v-if='mode === "create" || mode === "update"'
-></v-text-field>
-<v-select
-  :items="manufacturers"
-  solo
-  :rules="rules.notEmptySelector"
-  item-text="title"
-  item-value="id"
-  v-model="formData.manufacturerId"
-  label="Производитель"
-  required
-  v-if='mode === "create" || mode === "update"'
-></v-select>
-<v-select
-  :items="warrantys"
-  solo
-  :rules="rules.notEmptySelector"
-  item-text="combineDates"
-  item-value="id"
-  v-model="formData.warrantyId"
-  label="Гарантия"
-  required
-  v-if='mode === "create" || mode === "update"'
-></v-select>
-<v-select
-  :items="['Ready','Working','Broken','Reparing','Repared']"
-  solo
-  :rules="rules.notEmptySelector"
-  v-model="formData.status"
-  label="Статус"
-  required
-  v-if='mode === "create" || mode === "update"'
-></v-select>
-<v-text-field
-  :rules="rules.notMoreThanTen"
-  v-model="formData.formFactor"
-  label="Форм-фактор"
-  required
-  v-if='mode === "create" || mode === "update"'
-></v-text-field>
-<v-text-field
-  :rules="rules.notMoreThanTen"
-  v-model="formData.chipset"
-  label="Чипсет"
-  required
-  v-if='mode === "create" || mode === "update"'
-></v-text-field>
-<v-text-field
-  :rules="rules.notMoreThanTen"
-  mask="##"
-  v-model="formData.pciSlots"
-  label="PCI-слоты"
-  required
-  v-if='mode === "create" || mode === "update"'
-></v-text-field>
-<v-text-field
-  :rules="rules.notMoreThanTen"
-  mask="##"
-  v-model="formData.usedPciSlots"
-  label="Занятые PCI-слоты"
-  required
-  v-if='mode === "create" || mode === "update"'
-></v-text-field>
-<v-text-field
-  :rules="rules.notMoreThanTen"
-  mask="##"
-  v-model="formData.ramSlots"
-  label="Слоты RAM"
-  required
-  v-if='mode === "create" || mode === "update"'
-></v-text-field>
-<v-text-field
-  :rules="rules.notMoreThanTen"
-  mask="##"
-  v-model="formData.usedRamSlots"
-  label="Занятыe слоты RAM"
-  required
-  v-if='mode === "create" || mode === "update"'
-></v-text-field>
-
+            <v-text-field
+              v-model='formData.serialNumber'
+              label='Серийный номер (Большие буквы и цифры)'
+              :rules='rules.notMoreThanTen'
+              :counter='10'
+              mask='NNNNNNNNNN'
+              required
+              v-if='mode === "create" || mode === "update"'
+            >
+            </v-text-field>
+            <v-select
+              v-model='formData.manufacturerId'
+              label='Производитель (id)'
+              :rules='rules.notEmptySelector'
+              :items='manufacturers'
+              item-text='title'
+              item-value='id'
+              v-if='mode === "create" || mode === "update"'
+              required
+              solo
+            >
+            </v-select>
+            <v-select
+              v-model='formData.warrantyId'
+              label='Гарантия'
+              :rules='rules.notEmptySelector'
+              :items='warrantys'
+              :item-text='combineDates'
+              item-value='id'
+              required
+              solo
+              v-if='mode === "create" || mode === "update"'
+            >
+            </v-select>
+            <v-select
+              v-model='formData.status'
+              label='Статус'
+              :rules='rules.notEmptySelector'
+              :items='["Ready", "Working", "Broken", "Reparing", "Repared"]'
+              solo
+              required
+              v-if='mode === "create" || mode === "update"'
+            >
+            </v-select>
+            <v-text-field
+              v-model='formData.formFactor'
+              label='Форм фактор'
+              :rules='rules.notMoreThanTen'
+              :counter='10'
+              required
+              v-if='mode === "create" || mode === "update"'
+            >
+            </v-text-field>
+            <v-text-field
+              v-model='formData.chipset'
+              label='Чипсет'
+              :rules='rules.notMoreThanTen'
+              :counter='10'
+              required
+              v-if='mode === "create" || mode === "update"'
+            >
+            </v-text-field>
+            <v-text-field
+              v-model='formData.pciSlots'
+              label='PCI слоты'
+              required
+              mask='##'
+              v-if='mode === "create" || mode === "update"'
+            >
+            </v-text-field>
+            <v-text-field
+              v-model='formData.usedPciSlots'
+              label='Занятые PCI слоты'
+              mask='##'
+              required
+              v-if='mode === "create" || mode === "update"'
+            >
+            </v-text-field>
+            <v-text-field
+              v-model='formData.ramSlots'
+              label='Слоты оперативной памяти'
+              mask='##'
+              required
+              v-if='mode === "create" || mode === "update"'
+            >
+            </v-text-field>
+            <v-text-field
+              v-model='formData.usedRamSlots'
+              label='Занятые слоты опертивной памяти'
+              mask='##'
+              required
+              v-if='mode === "create" || mode === "update"'
+            >
+            </v-text-field>
+          -->
+          |form_fields|
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
@@ -191,34 +203,34 @@ export default {
       mode: 'create',
       prevMode: '',
       headers: [
-        { text: 'id', align: 'right', value: 'id' },
-        
-    { text: 'Серийный номер', align: 'right', value: 'serialNumber' },
-    { text: 'Производитель', align: 'right', value: 'manufacturerId' },
-    { text: 'Гарантия', align: 'right', value: 'warrantyId' },
-    { text: 'Статус', align: 'right', value: 'status' },
-    { text: 'Форм-фактор', align: 'right', value: 'formFactor' },
-    { text: 'Чипсет', align: 'right', value: 'chipset' },
-    { text: 'PCI-слоты', align: 'right', value: 'pciSlots' },
-    { text: 'Занятые PCI-слоты', align: 'right', value: 'usedPciSlots' },
-    { text: 'Слоты RAM', align: 'right', value: 'ramSlots' },
-    { text: 'Занятыe слоты RAM', align: 'right', value: 'usedRamSlots' },
+        /*{ text: 'id', align: 'right', value: 'id' },
+        { text: 'Серийный номер', align: 'right', value: 'serialNumber' },
+        { text: 'Производитель(id)', align: 'right', value: 'manufacturerId' },
+        { text: 'Гарантия(id)', align: 'right', value: 'warrantyId' },
+        { text: 'Статус(id)', align: 'right', value: 'status' },
+        { text: 'Форм-фактор', align: 'right', value: 'formFactor' },
+        { text: 'Чипсет', align: 'right', value: 'chipset' },
+        { text: 'PCI-слоты', align: 'right', value: 'pciSlots' },
+        { text: 'Занятые PCI-слоты', align: 'right', value: 'usedPciSlots' },
+        { text: 'RAM слоты', align: 'right', value: 'ramSlots' },
+        { text: 'Занятые RAM слоты', align: 'right', value: 'usedRamSlots' },*/
+        |table_headers|
       ],
       isDisplayForm: false,
       valid: false,
       formData: {
-        id: '',
-        
-    serialNumber: '',
-    manufacturerId: '',
-    warrantyId: '',
-    status: '',
-    formFactor: '',
-    chipset: '',
-    pciSlots: '',
-    usedPciSlots: '0',
-    ramSlots: '',
-    usedRamSlots: '0',
+        |form_field_data|
+        /*id: '',
+        serialNumber: '',
+        manufacturerId: '',
+        warrantyId: '',
+        status: '',
+        formFactor: '',
+        chipset: '',
+        pciSlots: '',
+        usedPciSlots: '0',
+        ramSlots: '',
+        usedRamSlots: '0'*/
       },
       rules: {
         notMoreThanTen: [
@@ -260,9 +272,9 @@ export default {
       return `${warranty.startDate}   ${warranty.endDate}`;
     },
     async validateAndMutate() {
-      Object.keys(this.formData).map(el => {
+      for(let el in this.formData) {
         if(this.mode !== 'delete' && !this.formData[el]) return;
-      })
+      }
       this.isDisplayForm = false;
       if(this.mode === 'create') await this.createModel();
       if(this.mode === 'update') await this.updateModel();
@@ -272,10 +284,10 @@ export default {
       await this.$apollo.mutate({
         mutation: gql`
           mutation($id: Int!) {
-            deleteMotherboard(input: {
+            delete|model_c_f|(input: {
               id: $id
             }) {
-              motherboard {
+              |model| {
                 id
               }
             }
@@ -287,9 +299,8 @@ export default {
       });
     },
     async updateModel() {
-      const data = find(this.motherboards, el => el.id === this.formData.id);
-      
-      let componentMetaInfoId;
+      const data = find(this.|model|, el => el.id === this.formData.id);
+      /*let componentMetaInfoId;
       componentMetaInfoId = await this.$apollo.mutate({
         mutation: gql`
           mutation($id: Int!, $manufacturerId: Int!, $warrantyId: Int!, $status: String!, $serialNumber: String!) {
@@ -314,42 +325,43 @@ export default {
           serialNumber: this.formData.serialNumber,
         }
       })
-      componentMetaInfoId = componentMetaInfoId.data.updateComponentmetainfo.componentmetainfo.id;
-
+      componentMetaInfoId = componentMetaInfoId.data.updateComponentmetainfo.componentmetainfo.id;*/
+      |update_component_meta_info|
       const result = await this.$apollo.mutate({
         mutation: gql`
-          mutation ($id: Int!, $formFactor: String!, $chipset: String!, $pciSlots: Int!, $usedPciSlots: Int!, $ramSlots: Int!, $usedRamSlots: Int!, $componentMetaInfoId: Int!) {
-            updateMotherboard(input: {
+          mutation (|main_params|$id: Int!, $formFactor: String!, $chipset: String!, $pciSlots: Int!, $usedPciSlots: Int!, $ramSlots: Int!, $usedRamSlots: Int!, $componentMetaInfoId: Int!) {
+            update|model_c_f|(input: {
               id: $id,
+              |main_params_and_values|
               formFactor: $formFactor,
-chipset: $chipset,
-pciSlots: $pciSlots,
-usedPciSlots: $usedPciSlots,
-ramSlots: $ramSlots,
-usedRamSlots: $usedRamSlots,
-componentMetaInfoId: $componentMetaInfoId
+              chipset: $chipset,
+              pciSlots: $pciSlots,
+              usedPciSlots: $usedPciSlots,
+              ramSlots: $ramSlots,
+              usedRamSlots: $usedRamSlots,
+              componentMetaInfoId: $componentMetaInfoId
             }) {
-              motherboard {
+              |model| {
                 id
               }    
             }
           }
         `,
         variables: {
-          id: Number(data.id),
+          /*id: Number(data.id),
+          |main_values|
           formFactor: this.formData.formFactor,
-chipset: this.formData.chipset,
-pciSlots: Number(this.formData.pciSlots),
-usedPciSlots: Number(this.formData.usedPciSlots),
-ramSlots: Number(this.formData.ramSlots),
-usedRamSlots: Number(this.formData.usedRamSlots),
-componentMetaInfoId: Number(componentMetaInfoId)
+          chipset: this.formData.chipset,
+          pciSlots: Number(this.formData.pciSlots),
+          usedPciSlots: Number(this.formData.usedPciSlots),
+          ramSlots: Number(this.formData.ramSlots),
+          usedRamSlots: Number(this.formData.usedRamSlots),
+          componentMetaInfoId: Number(componentMetaInfoId),*/
         }
       });
     },
     async createModel() {
-      
-      let componentMetaInfoId;
+      /*let componentMetaInfoId;
       componentMetaInfoId = await this.$apollo.mutate({
         mutation: gql`
           mutation($manufacturerId: Int!, $warrantyId: Int!, $status: String!, $serialNumber: String!) {
@@ -372,34 +384,36 @@ componentMetaInfoId: Number(componentMetaInfoId)
           serialNumber: this.formData.serialNumber,
         }
       })
-      componentMetaInfoId = componentMetaInfoId.data.createComponentmetainfo.componentmetainfo.id;
-
+      componentMetaInfoId = componentMetaInfoId.data.createComponentmetainfo.componentmetainfo.id;*/
+      |create_component_meta_info|
       const result = await this.$apollo.mutate({
         mutation: gql`
-          mutation ($formFactor: String!, $chipset: String!, $pciSlots: Int!, $usedPciSlots: Int!, $ramSlots: Int!, $usedRamSlots: Int!, $componentMetaInfoId: Int!) {
-            createMotherboard(input: {
+          mutation (|main_params|$formFactor: String!, $chipset: String!, $pciSlots: Int!, $usedPciSlots: Int!, $ramSlots: Int!, $usedRamSlots: Int!, $componentMetaInfoId: Int!) {
+            create|model_c_f|(input: {
+              |main_params_and_values|
               formFactor: $formFactor,
-chipset: $chipset,
-pciSlots: $pciSlots,
-usedPciSlots: $usedPciSlots,
-ramSlots: $ramSlots,
-usedRamSlots: $usedRamSlots,
-componentMetaInfoId: $componentMetaInfoId
+              chipset: $chipset,
+              pciSlots: $pciSlots,
+              usedPciSlots: $usedPciSlots,
+              ramSlots: $ramSlots,
+              usedRamSlots: $usedRamSlots,
+              componentMetaInfoId: $componentMetaInfoId
             }) {
-              motherboard {
+              |model| {
                 id
               }    
             }
           }
         `,
         variables: {
-          formFactor: this.formData.formFactor,
-chipset: this.formData.chipset,
-pciSlots: Number(this.formData.pciSlots),
-usedPciSlots: Number(this.formData.usedPciSlots),
-ramSlots: Number(this.formData.ramSlots),
-usedRamSlots: Number(this.formData.usedRamSlots),
-componentMetaInfoId: Number(componentMetaInfoId)
+          |main_values|
+          /*formFactor: this.formData.formFactor,
+          chipset: this.formData.chipset,
+          pciSlots: Number(this.formData.pciSlots),
+          usedPciSlots: Number(this.formData.usedPciSlots),
+          ramSlots: Number(this.formData.ramSlots),
+          usedRamSlots: Number(this.formData.usedRamSlots),
+          componentMetaInfoId: Number(componentMetaInfoId),*/
         }
       });
     }
@@ -407,27 +421,27 @@ componentMetaInfoId: Number(componentMetaInfoId)
   apollo: {
     motherboards: gql`
       query {
-      motherboards {
-          
+      |model_s| {
+          |component_meta_info_query|
           componentMetaInfo {
             serialNumber,
             manufacturerId,
             warrantyId,
             status
           }
-
           id,
+          |model_fields|
           formFactor,
-chipset,
-pciSlots,
-usedPciSlots,
-ramSlots,
-usedRamSlots,
-componentMetaInfoId
+          chipset,
+          pciSlots,
+          usedPciSlots,
+          ramSlots,
+          usedRamSlots,
+          componentMetaInfoId
         }
       }
     `,
-    
+    |manufacturers_query|
     manufacturers: gql`
       query {
         manufacturers {
@@ -436,8 +450,7 @@ componentMetaInfoId
         }
       }
     `,
-
-    
+    |warrantys_query|
     warrantys: gql`
       query {
         warrantys {
@@ -446,8 +459,7 @@ componentMetaInfoId
           endDate
         }
       }
-    `,
-
+    `
   }
 }
 </script>
