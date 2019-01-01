@@ -53,6 +53,7 @@ export default {
         { title: 'Корпуса', icon: 'kitchen', isHighlighted: '', route: '/trunks'  },
         { title: 'Гарантии', icon: 'class', isHighlighted: '', route: '/warranties'  },
         { title: 'Производители', icon: 'domain', isHighlighted: '', route: '/manufacturers'  },
+        { title: 'Произвольный SQL запрос', icon: 'receipt', route: '/customsql' }
       ]
     }
   },

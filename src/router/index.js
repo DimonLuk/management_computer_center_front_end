@@ -7,6 +7,7 @@ import Rams from '@/components/Rams'
 import Trunks from '@/components/Trunks'
 import Warranties from '@/components/Warranties'
 import Manufacturers from '@/components/Manufacturers'
+import CustomSqlPage from '@/components/CustomSqlPage'
 
 Vue.use(Router)
 
@@ -47,6 +48,10 @@ export default new Router({
       name: 'Manufacturers',
       component: Manufacturers
     },
-    
+    {
+      path: '/customsql',
+      name: 'CustomSql',
+      component: CustomSqlPage
+    }
   ]
 })
