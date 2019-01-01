@@ -193,10 +193,10 @@ export default {
       headers: [
         { text: 'id', align: 'right', value: 'id' },
         
-    { text: 'Серийный номер', align: 'right', value: 'serialNumber' },
-    { text: 'Производитель', align: 'right', value: 'manufacturerId' },
-    { text: 'Гарантия', align: 'right', value: 'warrantyId' },
-    { text: 'Статус', align: 'right', value: 'status' },
+    { text: 'Серийный номер', align: 'right', value: 'componentMetaInfo.serialNumber' },
+    { text: 'Производитель', align: 'right', value: 'componentMetaInfo.manufacturerId' },
+    { text: 'Гарантия', align: 'right', value: 'componentMetaInfo.warrantyId' },
+    { text: 'Статус', align: 'right', value: 'componentMetaInfo.status' },
     { text: 'Форм-фактор', align: 'right', value: 'formFactor' },
     { text: 'Чипсет', align: 'right', value: 'chipset' },
     { text: 'PCI-слоты', align: 'right', value: 'pciSlots' },

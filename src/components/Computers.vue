@@ -315,7 +315,7 @@ processorId
     `,
     trunks: gql`
       query {
-        trunks {
+        trunks (unused: true) {
           id,
           componentMetaInfo {
             serialNumber
@@ -325,7 +325,7 @@ processorId
     `,
     motherboards: gql`
       query {
-        motherboards {
+        motherboards (unused: true){
           id,
           componentMetaInfo {
             serialNumber
@@ -335,7 +335,7 @@ processorId
     `,
     rams: gql`
       query {
-        rams {
+        rams (unused: true) {
           id,
           componentMetaInfo {
             serialNumber
@@ -345,7 +345,7 @@ processorId
     `,
     processors: gql`
       query {
-        processors {
+        processors (unused: true) {
           id,
           componentMetaInfo {
             serialNumber
