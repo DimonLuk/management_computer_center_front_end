@@ -267,6 +267,7 @@ export default {
       if(this.mode === 'create') await this.createModel();
       if(this.mode === 'update') await this.updateModel();
       if(this.mode === 'delete') await this.deleteModel();
+      this.$apollo.queries.motherboards.refetch();
     },
     async deleteModel() {
       await this.$apollo.mutate({
