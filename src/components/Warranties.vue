@@ -174,7 +174,7 @@ export default {
       if(this.mode === 'create') await this.createModel();
       if(this.mode === 'update') await this.updateModel();
       if(this.mode === 'delete') await this.deleteModel();
-      window.location.reload();
+      this.$apollo.queries.warrantys.refetch();
     },
     async deleteModel() {
       await this.$apollo.mutate({

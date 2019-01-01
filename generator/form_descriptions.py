@@ -111,5 +111,176 @@ FORMS = (
                 'field_type': 'Date',
             }
         ),
+    },
+    {
+        'model': 'processor',
+        'type': 'component',
+        'fields': (
+            {
+                'source': 'cores',
+                'translation': 'Ядра',
+                'input_type': 'text',
+                'default': '0',
+                'mask': '##',
+                'field_type': 'Int'
+            },
+            {
+                'source': 'l1Cache',
+                'translation': 'Кэш 1-го уровня(Kb)',
+                'input_type': 'text',
+                'default': '0',
+                'mask': '######',
+                'field_type': 'Int'
+            },
+            {
+                'source': 'l2Cache',
+                'translation': 'Кэш 2-го уровня(Kb)',
+                'input_type': 'text',
+                'default': '0',
+                'mask': '######',
+                'field_type': 'Int'
+            },
+            {
+                'source': 'l3Cache',
+                'translation': 'Кэш 3-го уровня(Kb)',
+                'input_type': 'text',
+                'default': '0',
+                'mask': '######',
+                'field_type': 'Int'
+            },
+        )
+    },
+    {
+        'model': 'ram',
+        'type': 'component',
+        'fields': (
+            {
+                'source': 'capacity',
+                'translation': 'Объём (Gb)',
+                'input_type': 'text',
+                'default': '',
+                'field_type': 'Int',
+                'mask': '##'
+            },
+            {
+                'source': 'frequency',
+                'translation': 'Частота (MHz)',
+                'input_type': 'text',
+                'default': '',
+                'field_type': 'Int',
+                'mask': '####'
+            }
+        )
+    },
+    {
+        'model': 'trunk',
+        'type': 'component',
+        'fields': (
+            {
+                'source': 'width',
+                'translation': 'Ширина (см)',
+                'input_type': 'text',
+                'default': '',
+                'field_type': 'Int',
+                'mask': '###'
+            },
+            {
+                'source': 'height',
+                'translation': 'Высота (см)',
+                'input_type': 'text',
+                'default': '',
+                'field_type': 'Int',
+                'mask': '###'
+            },
+            {
+                'source': 'formFactor',
+                'translation': 'Форм-фактор',
+                'input_type': 'select',
+                'select_source': "['mATX','ATX','lATX']",
+                'default': '',
+                'field_type': 'String',
+            }
+        )
+    },
+    {
+        'model': 'manufacturer',
+        'type': 'not_component',
+        'fields': (
+            {
+                'source': 'title',
+                'translation': 'Название',
+                'input_type': 'text',
+                'default': '',
+                'field_type': 'String',
+            },
+            {
+                'source': 'address',
+                'translation': 'Адресс',
+                'input_type': 'text',
+                'default': '',
+                'field_type': 'String',
+            },
+            {
+                'source': 'phoneNumber',
+                'translation': 'Номер Телефона',
+                'input_type': 'text',
+                'default': '',
+                'field_type': 'String',
+                'mask': '+############'
+            },
+        ),
+    },
+    {
+        'model': 'computer',
+        'type': 'computer',
+        'fields': (
+            {
+                'source': 'room',
+                'translation': 'Комната',
+                'input_type': 'text',
+                'default': '',
+                'field_type': 'String',
+            },
+            {
+                'source': 'trunkId',
+                'translation': 'Корпус',
+                'input_type': 'select',
+                'default': '',
+                'field_type': 'Int',
+                'item_text_field': 'combineComponent',
+                'item_value_field': 'id',
+                'select_source': 'trunks',
+            },
+            {
+                'source': 'motherboardId',
+                'translation': 'Материнская плата',
+                'input_type': 'select',
+                'default': '',
+                'field_type': 'Int',
+                'item_text_field': 'combineComponent',
+                'item_value_field': 'id',
+                'select_source': 'motherboards',
+            },
+            {
+                'source': 'ramId',
+                'translation': 'Оперативная память',
+                'input_type': 'select',
+                'default': '',
+                'field_type': 'Int',
+                'item_text_field': 'combineComponent',
+                'item_value_field': 'id',
+                'select_source': 'rams',
+            },
+            {
+                'source': 'processorId',
+                'translation': 'Процессор',
+                'input_type': 'select',
+                'default': '',
+                'field_type': 'Int',
+                'item_text_field': 'combineComponent',
+                'item_value_field': 'id',
+                'select_source': 'processors',
+            },
+        )
     }
 )
