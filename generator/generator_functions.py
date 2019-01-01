@@ -154,11 +154,11 @@ def generate_table_headers(fields):
     result = ''
     template = \
         """
-    {{ text: '{translation}', align: 'right', value: '{flat_name}' }},"""
+    {{ text: '{translation}', align: 'right', value: '{source}' }},"""
     for field in fields:
         result += template.format(
             translation=field.translation,
-            flat_name=field.flat_name
+            source=field.source
         )
     return result
 
