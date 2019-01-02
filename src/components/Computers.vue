@@ -149,6 +149,8 @@ export default {
   data() {
     return {
       search: '',
+      skipQuery: true,
+      unused: true,
       mode: 'create',
       prevMode: '',
       headers: [
@@ -182,9 +184,19 @@ export default {
     }
   },
   methods: {
+    makeQuery() {
+      this.skipQuery = false;
+      this.unused = this.mode === 'create';
+      this.$apollo.queries.trunks.refetch();
+      this.$apollo.queries.rams.refetch();
+      this.$apollo.queries.processors.refetch();
+      this.$apollo.queries.motherboards.refetch();
+      this.skipQuery = true;
+    },
     prefill(mode) {
       if(mode)
         this.mode = mode;
+      this.makeQuery();
       if(this.mode === 'update') {
         this.prevMode = 'update'
         const data = find(this.computers, el => el.id === this.formData.id);
@@ -313,46 +325,86 @@ processorId
         }
       }
     `,
-    trunks: gql`
-      query {
-        trunks (unused: true) {
-          id,
-          componentMetaInfo {
-            serialNumber
+    trunks: {
+      query:  gql`
+        query ($unused: Boolean!){
+          trunks (unused: $unused) {
+            id,
+            componentMetaInfo {
+              serialNumber
+            }
           }
         }
-      }
-    `,
-    motherboards: gql`
-      query {
-        motherboards (unused: true){
-          id,
-          componentMetaInfo {
-            serialNumber
+        `,
+      variables() {
+        return {
+          unused: this.unused
+        };
+      },
+      //skip() {
+      //  return this.skipQuery
+      //}
+    },
+    motherboards: {
+      query: gql`
+        query ($unused: Boolean!){
+          motherboards (unused: $unused){
+            id,
+            componentMetaInfo {
+              serialNumber
+            }
           }
         }
-      }
-    `,
-    rams: gql`
-      query {
-        rams (unused: true) {
-          id,
-          componentMetaInfo {
-            serialNumber
+      `,
+      variables() {
+        return {
+          unused: this.unused
+        };
+      },
+      //skip() {
+      //  return this.skipQuery;
+      //}
+    },
+    rams: {
+      query: gql`
+        query ($unused: Boolean!){
+          rams (unused: $unused) {
+            id,
+            componentMetaInfo {
+              serialNumber
+            }
           }
         }
-      }
-    `,
-    processors: gql`
-      query {
-        processors (unused: true) {
-          id,
-          componentMetaInfo {
-            serialNumber
+      `,
+      variables() {
+        return {
+          unused: this.unused
+        };
+      },
+      //skip() {
+      //  return this.skipQuery;
+      //}
+    },
+    processors: {
+        query: gql`
+        query ($unused: Boolean!){
+          processors (unused: $unused) {
+            id,
+            componentMetaInfo {
+              serialNumber
+            }
           }
         }
-      }
-    `,
+      `,
+      variables() {
+        return {
+          unused: this.unused
+        }
+      },
+      //skip() {
+      //  return this.skipQuery;
+      //}
+    },
     
   }
 }
