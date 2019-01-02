@@ -45,7 +45,8 @@ FORMS = (
             {
                 'source': 'formFactor',
                 'translation': 'Форм-фактор',
-                'input_type': 'text',
+                'input_type': 'select',
+                'select_source': "['mATX','ATX','lATX']",
                 'default': '',
                 'field_type': 'String',
             },

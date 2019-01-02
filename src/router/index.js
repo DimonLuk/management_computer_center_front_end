@@ -8,6 +8,8 @@ import Trunks from '@/components/Trunks'
 import Warranties from '@/components/Warranties'
 import Manufacturers from '@/components/Manufacturers'
 import CustomSqlPage from '@/components/CustomSqlPage'
+import ComputersPrintPage from '@/components/ComputersPrintPage'
+import BrokenComponents from '@/components/BrokenComponents'
 
 Vue.use(Router)
 
@@ -52,6 +54,16 @@ export default new Router({
       path: '/customsql',
       name: 'CustomSql',
       component: CustomSqlPage
+    },
+    {
+      path: '/printComputers',
+      name: 'ComputersPrintPage',
+      component: ComputersPrintPage
+    },
+    {
+      path: '/printBroken',
+      name: 'BrokenComponents',
+      component: BrokenComponents,
     }
   ]
 })

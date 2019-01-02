@@ -2,9 +2,14 @@
   <div id="app">
     <v-app id='management'>
       <v-toolbar app>
-        <v-toolbar-title>Управление ВЦ ВУЗа</v-toolbar-title>
+        <v-toolbar-title
+          @click='changeRoute(items[0])'
+          style='cursor: pointer;'
+        >
+        Управление ВЦ ВУЗа
+        </v-toolbar-title>
       </v-toolbar>
-      <v-navigation-drawer app>
+      <v-navigation-drawer app :value='drawer'>
         <v-toolbar flat>
           <v-list>
             <v-list-tile>
@@ -45,6 +50,7 @@ export default {
   name: 'app',
   data () {
     return {
+      drawer: true,
       items: [
         { title: 'Компьютеры', icon: 'computer', isHighlighted: 'blue--text', route: '/' },
         { title: 'Материнские платы', icon: 'developer_board', isHighlighted: '', route: '/motherboards'  },
@@ -53,7 +59,13 @@ export default {
         { title: 'Корпуса', icon: 'kitchen', isHighlighted: '', route: '/trunks'  },
         { title: 'Гарантии', icon: 'class', isHighlighted: '', route: '/warranties'  },
         { title: 'Производители', icon: 'domain', isHighlighted: '', route: '/manufacturers'  },
-        { title: 'Произвольный SQL запрос', icon: 'receipt', route: '/customsql' }
+        { title: 'Произвольный SQL запрос', icon: 'receipt', route: '/customsql' },
+        { title: 'Отчёт по компьютерам', icon: 'assignment', route: '/printComputers' },
+        { title: 'Отчёт по сломаным компонентам', icon: 'assignment', route: '/printBroken' }
+      ],
+      printingPaths: [
+        '/printComputers',
+        '/printBroken'
       ]
     }
   },
@@ -63,6 +75,10 @@ export default {
         i.isHighlighted = '';
       }
       item.isHighlighted = 'blue--text';
+      if(this.printingPaths.includes(item.route))
+        this.drawer = false;
+      else
+        this.drawer = true;
       this.$router.push(item.route)
     }
   }
