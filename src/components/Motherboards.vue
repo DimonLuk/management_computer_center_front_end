@@ -98,7 +98,7 @@
   :items="warrantys"
   solo
   :rules="rules.notEmptySelector"
-  item-text="combineDates"
+  :item-text="combineDates"
   item-value="id"
   v-model="formData.warrantyId"
   label="Гарантия"
@@ -114,13 +114,15 @@
   required
   v-if='mode === "create" || mode === "update"'
 ></v-select>
-<v-text-field
-  :rules="rules.notMoreThanTen"
+<v-select
+  :items="['mATX','ATX','lATX']"
+  solo
+  :rules="rules.notEmptySelector"
   v-model="formData.formFactor"
   label="Форм-фактор"
   required
   v-if='mode === "create" || mode === "update"'
-></v-text-field>
+></v-select>
 <v-text-field
   :rules="rules.notMoreThanTen"
   v-model="formData.chipset"

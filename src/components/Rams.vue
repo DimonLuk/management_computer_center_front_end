@@ -94,7 +94,7 @@
   :items="warrantys"
   solo
   :rules="rules.notEmptySelector"
-  item-text="combineDates"
+  :item-text="combineDates"
   item-value="id"
   v-model="formData.warrantyId"
   label="Гарантия"
@@ -159,10 +159,10 @@ export default {
       headers: [
         { text: 'id', align: 'right', value: 'id' },
         
-    { text: 'Серийный номер', align: 'right', value: 'serialNumber' },
-    { text: 'Производитель', align: 'right', value: 'manufacturerId' },
-    { text: 'Гарантия', align: 'right', value: 'warrantyId' },
-    { text: 'Статус', align: 'right', value: 'status' },
+    { text: 'Серийный номер', align: 'right', value: 'componentMetaInfo.serialNumber' },
+    { text: 'Производитель', align: 'right', value: 'componentMetaInfo.manufacturerId' },
+    { text: 'Гарантия', align: 'right', value: 'componentMetaInfo.warrantyId' },
+    { text: 'Статус', align: 'right', value: 'componentMetaInfo.status' },
     { text: 'Объём (Gb)', align: 'right', value: 'capacity' },
     { text: 'Частота (MHz)', align: 'right', value: 'frequency' },
       ],
